@@ -1,3 +1,5 @@
+package ru.stqa.mfp.sandbox;
+
 public class MyFirstProgram {
 
 	public static void main(String[] args) {
