@@ -1,8 +1,8 @@
 package ru.stqa.mfp.addressbook.tests;
 
-import ru.stqa.mfp.addressbook.appmanager.ApplicationManager;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import ru.stqa.mfp.addressbook.appmanager.ApplicationManager;
 
 public class TestBase {
 
@@ -17,5 +17,4 @@ public class TestBase {
   public void tearDown() throws Exception {
     app.stop();
   }
-
 }
