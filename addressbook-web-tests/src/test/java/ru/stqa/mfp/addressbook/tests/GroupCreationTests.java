@@ -1,6 +1,6 @@
 package ru.stqa.mfp.addressbook.tests;
 
-import org.testng.annotations.*;
+import org.testng.annotations.Test;
 import ru.stqa.mfp.addressbook.model.GroupData;
 
 public class GroupCreationTests extends TestBase {
