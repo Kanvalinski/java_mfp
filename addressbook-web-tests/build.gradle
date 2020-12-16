@@ -8,6 +8,7 @@ dependencies {
     implementation 'org.testng:testng:7.3.0'
     implementation 'org.seleniumhq.selenium:selenium-java:4.0.0-alpha-7'
     implementation 'com.google.guava:guava:30.0-jre'
+    implementation 'org.slf4j:slf4j-nop:1.7.30'
 }
 
 if (hasProperty('buildScan')) {
