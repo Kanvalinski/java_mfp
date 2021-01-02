@@ -11,19 +11,17 @@ public class ContactModificationTests extends TestBase {
 
   @Test
   public void testContactModification() {
-    app.getNavigationHelper().returnToHomePage();
+    app.goTo().returnToHomePage();
     if (!app.getContactHelper().isThereAContact()) {
       app.getContactHelper().createContact(new ContactData("Name test 1", "Name test 2", "Lastnametest3", "nicktest", "QA", "VRTtest", "Minsk", "+375445555555", "email@domain.com", "emailtest@domain.com", "test.com", "10", "November", "2000", "test1"), true);
     }
     List<ContactData> before = app.getContactHelper().getContactList();
+    app.getContactHelper().initContactModification(before.size() - 1);
 
-    app.getContactHelper().selectContact(before.size() - 1);
-    app.getContactHelper().initContactModification();
-
-    ContactData contact = new ContactData(before.get(before.size() - 1).getId(),"Name test 1 new", "Name test 2 new", "Lastnametest3 new", "nicktest new", "QA new", "VRTtest new", "Minsk new", "+375445555555 new", "email@domain.com new", "emailtest@domain.com new", "test.com new", "10", "November", "2000", null);
+    ContactData contact = new ContactData(before.get(before.size() - 1).getId(), "Name test 1 new", "Name test 2 new", "Lastnametest3 new", "nicktest new", "QA new", "VRTtest new", "Minsk new", "+375445555555 new", "email@domain.com new", "emailtest@domain.com new", "test.com new", "10", "November", "2000", null);
     app.getContactHelper().fillContactForm(contact, false);
     app.getContactHelper().submitContactModification();
-    app.getNavigationHelper().returnToHomePage();
+    app.goTo().returnToHomePage();
     List<ContactData> after = app.getContactHelper().getContactList();
 
     Assert.assertEquals(after.size(), before.size());
