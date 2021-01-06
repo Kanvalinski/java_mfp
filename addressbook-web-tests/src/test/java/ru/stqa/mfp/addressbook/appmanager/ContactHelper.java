@@ -3,7 +3,9 @@ package ru.stqa.mfp.addressbook.appmanager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import ru.stqa.mfp.addressbook.model.ContactData;
 import ru.stqa.mfp.addressbook.model.Contacts;
@@ -52,7 +54,7 @@ public class ContactHelper extends HelperBase {
   }
 
   private void selectContactById(int id) {
-    wd.findElement(By.cssSelector("input[value='" + id +"']")).click();
+    wd.findElement(By.cssSelector("input[value='" + id + "']")).click();
   }
 
   public void deleteSelectedContact() {
@@ -68,7 +70,7 @@ public class ContactHelper extends HelperBase {
   }
 
   private void initContactModificationById(int id) {
-    wd.findElement(By.cssSelector("a[href='edit.php?id=" + id +"']")).click();
+    wd.findElement(By.cssSelector("a[href='edit.php?id=" + id + "']")).click();
   }
 
   public void submitContactModification() {
@@ -96,10 +98,15 @@ public class ContactHelper extends HelperBase {
     returnToHomePage();
   }
 
+  public void waitForMessage() {
+    WebElement wait = new WebDriverWait(wd, 10).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div[class='msgbox']")));
+  }
+
   public void delete(ContactData contact) {
     selectContactById(contact.getId());
     deleteSelectedContact();
     acceptAlertDeleteContact();
+    waitForMessage();
   }
 
   public boolean isThereAContact() {
