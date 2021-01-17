@@ -1,9 +1,10 @@
 package ru.stqa.mfp.addressbook.appmanager;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoAlertPresentException;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.io.File;
 
 public class HelperBase {
   protected WebDriver wd;
@@ -27,6 +28,12 @@ public class HelperBase {
     }
   }
 
+  protected void attach(By locator, File file) {
+    if (file != null) {
+        wd.findElement(locator).sendKeys(file.getAbsolutePath());
+      }
+    }
+
   public boolean isAlertPresent() {
     try {
       wd.switchTo().alert();
@@ -44,4 +51,8 @@ public class HelperBase {
       return false;
     }
 }
+
+  public void waitForMessage() {
+    WebElement wait = new WebDriverWait(wd, 10).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div[class='msgbox']")));
+  }
 }

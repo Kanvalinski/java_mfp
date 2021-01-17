@@ -41,6 +41,7 @@ public class ContactHelper extends HelperBase {
     new Select(wd.findElement(By.name("bmonth"))).selectByVisibleText(contactData.getBmonth());
     click(By.name("bmonth"));
     type(By.name("byear"), contactData.getByear());
+    attach(By.name("photo"), contactData.getPhoto());
 
     if (creation) {
       new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
@@ -90,6 +91,7 @@ public class ContactHelper extends HelperBase {
             withBmonth("November").withByear("2000").withGroup("[none]"), true);
     */
     submitContactCreation();
+    waitForMessage();
     contactCache = null;
     returnToHomePage();
   }
@@ -98,12 +100,9 @@ public class ContactHelper extends HelperBase {
     initContactModificationById(contact.getId());
     fillContactForm(contact, false);
     submitContactModification();
+    waitForMessage();
     contactCache = null;
     returnToHomePage();
-  }
-
-  public void waitForMessage() {
-    WebElement wait = new WebDriverWait(wd, 10).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div[class='msgbox']")));
   }
 
   public void delete(ContactData contact) {
