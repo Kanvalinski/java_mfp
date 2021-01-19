@@ -19,7 +19,7 @@ public class ContactHelper extends HelperBase {
   }
 
   public void submitContactCreation() {
-    click(By.xpath("(//input[@name='submit'])[2]"));
+    click(By.xpath("(//input[@name='submit'])"));
   }
 
   public void fillContactForm(ContactData contactData, boolean creation) {
@@ -84,7 +84,7 @@ public class ContactHelper extends HelperBase {
 
   public void create(ContactData contact, boolean creation) {
     initContactCreation();
-    fillContactForm(contact, true);
+    fillContactForm(contact, creation);
     /*fillContactForm(new ContactData().withFirstname("Name test 2").withMiddlename("Name test 2").withLastname("Lastnametest3").
             withNickname("nicktest").withTitle("QA").withCompany("VRTtest").withAddress("Minsk").withMobile("+375445555555").
             withEmail("email@domain.com").withEmail2("emailtest@domain.com").withHomepage("test.com").withBday("10").
@@ -129,8 +129,8 @@ public class ContactHelper extends HelperBase {
     for (WebElement element : elements) {
       List<WebElement> cells = element.findElements(By.tagName("td"));
       int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
-      String firstname = cells.get(1).getText();
-      String lastname = cells.get(2).getText();
+      String firstname = cells.get(2).getText();
+      String lastname = cells.get(1).getText();
       String allPhones = cells.get(5).getText();
       String address = cells.get(3).getText();
       String allEmails = cells.get(4).getText();

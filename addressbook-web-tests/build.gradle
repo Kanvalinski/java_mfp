@@ -11,6 +11,8 @@ dependencies {
     implementation 'org.slf4j:slf4j-nop:1.7.30'
     implementation 'org.hamcrest:hamcrest:2.2'
     implementation 'com.beust:jcommander:1.78'
+    implementation 'com.thoughtworks.xstream:xstream:1.4.15'
+    implementation 'com.google.code.gson:gson:2.8.6'
 }
 
 if (hasProperty('buildScan')) {
