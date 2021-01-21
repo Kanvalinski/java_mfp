@@ -1,9 +1,9 @@
 [
   {
     "firstname": "firstnametest 0",
-    "middlename": "Middlename\n0",
+    "middlename": "Middlename0",
     "lastname": "lastname0",
-    "nickname": "nicktest\n0",
+    "nickname": "nicktest0",
     "title": "QA 0",
     "company": "VRTtest0",
     "address": "address\n0",
@@ -19,9 +19,9 @@
   },
   {
     "firstname": "firstnametest 1",
-    "middlename": "Middlename\n1",
+    "middlename": "Middlename1",
     "lastname": "lastname1",
-    "nickname": "nicktest\n1",
+    "nickname": "nicktest1",
     "title": "QA 1",
     "company": "VRTtest1",
     "address": "address\n1",
@@ -37,9 +37,9 @@
   },
   {
     "firstname": "firstnametest 2",
-    "middlename": "Middlename\n2",
+    "middlename": "Middlename2",
     "lastname": "lastname2",
-    "nickname": "nicktest\n2",
+    "nickname": "nicktest2",
     "title": "QA 2",
     "company": "VRTtest2",
     "address": "address\n2",
