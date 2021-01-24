@@ -7,7 +7,6 @@ import ru.stqa.mfp.addressbook.model.GroupData;
 import ru.stqa.mfp.addressbook.model.Groups;
 
 import java.util.List;
-import java.util.Set;
 
 public class GroupHelper extends HelperBase {
 
@@ -22,7 +21,7 @@ public class GroupHelper extends HelperBase {
   }
 
   public void selectGroupById(int id) {
-    wd.findElement(By.cssSelector("input[value = '" + id +"']")).click();
+    wd.findElement(By.cssSelector("input[value = '" + id + "']")).click();
   }
 
   public void initGroupCreation() {
@@ -85,15 +84,17 @@ public class GroupHelper extends HelperBase {
 
   public Groups all() {
     if (groupCache != null) {
-      return new Groups (groupCache);
+      return new Groups(groupCache);
     }
 
     groupCache = new Groups();
     List<WebElement> elements = wd.findElements(By.cssSelector("span.group"));
     for (WebElement element : elements) {
       String name = element.getText();
+      //String header = element.getText();
+      //String footer = element.getText();
       int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
-      groupCache.add(new GroupData().withId(id).withName(name));
+      groupCache.add(new GroupData().withId(id).withName(name)); //.withHeader(header).withFooter(footer)
     }
     return new Groups(groupCache);
   }
