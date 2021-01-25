@@ -6,6 +6,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ru.stqa.mfp.addressbook.model.ContactData;
 import ru.stqa.mfp.addressbook.model.Contacts;
+import ru.stqa.mfp.addressbook.model.Groups;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -37,37 +38,13 @@ public class ContactCreationTests extends TestBase {
     }
   }
 
-  @Test (dataProvider = "validContactsFromJson")
-  public void testContactCreation(ContactData contact) throws Exception {
-    //Contacts before = app.contact().all();
-    Contacts before = app.db().contacts();
-    app.contact().create(contact, true);
-    File photo = new File("src/test/resources/stphoto.jpg");
-    /*ContactData contact = new ContactData().withFirstname("Name test 2").withMiddlename("Name test 2").withLastname("Lastnametest3").
-            withNickname("nicktest").withTitle("QA").withCompany("VRTtest").withAddress("Minsk").withMobilePhone("+375445555555").
-            withEmail("email@domain.com").withEmail2("emailtest@domain.com").withHomepage("test.com").withBday("10").
-            withBmonth("November").withByear("2000").withGroup("test1").withPhoto(photo);
-    app.contact().initContactCreation();
-    app.contact().fillContactForm(contact, true);
-    app.contact().submitContactCreation();
-    app.contact().waitForMessage();
-    app.goTo().homePage();
-    */
-
-    assertThat(app.contact().count(), equalTo(before.size() +1));
-    //Contacts after = app.contact().all();
-    Contacts after = app.db().contacts();
-    assertThat(after, equalTo(
-            before.withAdded(contact.withId(after.stream().mapToInt((c) -> c.getId()).max().getAsInt()))));
-  }
-
-  @Test (enabled = false)
+  @Test(enabled = false)
   public void testBadContactCreation() throws Exception {
     Contacts before = app.contact().all();
     ContactData contact = new ContactData().withFirstname("Name test 3'").withMiddlename("Name test 2").withLastname("Lastnametest3").
             withNickname("nicktest").withTitle("QA").withCompany("VRTtest").withAddress("Minsk").withMobilePhone("+375445555555").
             withEmail("email@domain.com").withEmail2("emailtest@domain.com").withHomepage("test.com").withBday("10").
-            withBmonth("November").withByear("2000").withGroup("test1");
+            withBmonth("November").withByear("2000"); //.withGroup("test1") -- deleted
     app.contact().initContactCreation();
     app.contact().fillContactForm(contact, true);
     app.contact().submitContactCreation();
@@ -76,15 +53,44 @@ public class ContactCreationTests extends TestBase {
     Contacts after = app.contact().all();
 
     assertThat(after, equalTo(before));
+    verifyContactListIUi();
     app.logout();
   }
 
-  @Test (enabled = false)
+  @Test(enabled = false)
   public void testCurrentDir() {
     File currentDir = new File(".");
     System.out.println(currentDir.getAbsolutePath());
     File photo = new File("src/test/resources/stphoto.jpg");
     System.out.println(photo.getAbsolutePath());
     System.out.println(photo.exists());
+  }
+
+  @Test(dataProvider = "validContactsFromJson")
+  public void testContactCreation(ContactData contact) throws Exception {
+    //Contacts before = app.contact().all();
+    Groups groups = app.db().groups();
+    File photo = new File("src/test/resources/stphoto.jpg");
+    ContactData newContact = new ContactData().withFirstname("test_name").withLastname("test_surname")
+            .withPhoto(photo).inGroup(groups.iterator().next());
+    Contacts before = app.db().contacts();
+    //app.contact().create(contact, true); //Create Contacts using data of ContactGenerator
+    /*ContactData contact = new ContactData().withFirstname("Name test 2").withMiddlename("Name test 2").withLastname("Lastnametest3").
+            withNickname("nicktest").withTitle("QA").withCompany("VRTtest").withAddress("Minsk").withMobilePhone("+375445555555").
+            withEmail("email@domain.com").withEmail2("emailtest@domain.com").withHomepage("test.com").withBday("10").
+            withBmonth("November").withByear("2000").withGroup("test1").withPhoto(photo);
+    */
+    app.contact().initContactCreation();
+    app.contact().fillContactForm(newContact, true);
+    app.contact().submitContactCreation();
+    app.contact().waitForMessage();
+    app.goTo().homePage();
+
+
+    assertThat(app.contact().count(), equalTo(before.size() + 1));
+    //Contacts after = app.contact().all();
+    Contacts after = app.db().contacts();
+    assertThat(after, equalTo(
+            before.withAdded(contact.withId(after.stream().mapToInt((c) -> c.getId()).max().getAsInt()))));
   }
 }
