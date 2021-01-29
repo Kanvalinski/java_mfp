@@ -12,11 +12,11 @@ public class FtpHelper {
   private FTPClient ftp;
 
   public FtpHelper(ApplicationManager app) {
-   this.app = app;
-   ftp = new FTPClient();
+    this.app = app;
+    ftp = new FTPClient();
   }
 
-  public void upload(File file, String target, String backup) throws IOException{
+  public void upload(File file, String target, String backup) throws IOException {
     ftp.connect(app.getProperty("ftp.host"));
     ftp.login(app.getProperty("ftp.login"), app.getProperty("ftp.password"));
     ftp.deleteFile(backup);
@@ -26,7 +26,7 @@ public class FtpHelper {
     ftp.disconnect();
   }
 
-  public void restore(String backup, String target) throws IOException{
+  public void restore(String backup, String target) throws IOException {
     ftp.connect(app.getProperty("ftp.host"));
     ftp.login(app.getProperty("ftp.login"), app.getProperty("ftp.password"));
     ftp.deleteFile(target);

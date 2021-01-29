@@ -1,6 +1,7 @@
 package ru.stqa.mfp.mantis.appmanager;
 
 
+
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -9,6 +10,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.client.LaxRedirectStrategy;
+
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
@@ -34,11 +36,11 @@ public class HttpSession {
     params.add(new BasicNameValuePair("return", "index.php"));
     post.setEntity(new UrlEncodedFormEntity(params));
     CloseableHttpResponse response = httpclient.execute(post);
-    String body = getTextFrom(response);
-    return body.contains(String.format("<span class=\"italic\">%s</span>", username));
+    String body = geTextFrom(response);
+    return body.contains(String.format("<span class=\"user-info\">%s</span>", username));
   }
 
-  private String getTextFrom(CloseableHttpResponse response) throws IOException {
+  private String geTextFrom(CloseableHttpResponse response) throws IOException {
     try {
       return EntityUtils.toString(response.getEntity());
     } finally {
@@ -47,9 +49,9 @@ public class HttpSession {
   }
 
   public boolean isLoggedInAs(String username) throws IOException {
-    HttpGet get = new HttpGet(app.getProperty("web.baseUrl") + "/login.php");
+    HttpGet get = new HttpGet(app.getProperty("web.baseUrl") + "/index.php");
     CloseableHttpResponse response = httpclient.execute(get);
-    String body = getTextFrom(response);
-    return body.contains(String.format("<span class=\"italic\">%s</span>", username));
+    String body = geTextFrom(response);
+    return body.contains(String.format("<span class=\"user-info\">%s</span>", username));
   }
 }
