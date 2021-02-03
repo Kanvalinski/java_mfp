@@ -48,6 +48,10 @@ task testContacts (type: Test) {
     }
 }
 
+test {
+    useTestNG()
+}
+
 if (hasProperty('buildScan')) {
     buildScan {
         termsOfServiceUrl = 'https://gradle.com/terms-of-service'
