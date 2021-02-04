@@ -19,6 +19,10 @@ public class MailHelper {
     wiser = new Wiser();
   }
 
+  public void start() {
+    wiser.start();
+  }
+
   public List<MailMessage> waitForMail(int count, long timeout) throws MessagingException, IOException {
     long start = System.currentTimeMillis();
     while (System.currentTimeMillis() < start + timeout) {
@@ -48,10 +52,6 @@ public class MailHelper {
       e.printStackTrace();
       return null;
     }
-  }
-
-  public void start() {
-    wiser.start();
   }
 
   public void stop() {

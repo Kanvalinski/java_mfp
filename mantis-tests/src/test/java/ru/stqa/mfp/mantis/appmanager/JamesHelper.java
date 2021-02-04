@@ -29,21 +29,28 @@ public class JamesHelper {
   }
 
   public boolean doesUserExist(String name) {
-    initTelnetsession();
-    write("verify" + name);
+    initTelnetSession();
+    write("verify " + name);
     String result = readUntil("exist");
     closeTelnetSession();
     return result.trim().equals("User " + name + " exist");
   }
 
-  public void createUser(String name, String passwd) {
-    initTelnetsession();
-    write("adduser " + name + " " + passwd);
+  public void createUser(String name, String password) {
+    initTelnetSession();
+    write("adduser " + name + " " + password);
+    String result = readUntil("User " + name + " added");
+    closeTelnetSession();
+  }
+
+  public void deleteUser(String name) {
+    initTelnetSession();
+    write("deluser " + name);
     String result = readUntil("User " + name + " deleted");
     closeTelnetSession();
   }
 
-  private void initTelnetsession() {
+  private void initTelnetSession() {
     mailserver = app.getProperty("mailserver.host");
     int port = Integer.parseInt(app.getProperty("mailserver.port"));
     String login = app.getProperty("mailserver.adminlogin");
@@ -61,9 +68,9 @@ public class JamesHelper {
 
     // Don't know why it doesn't allow login at the first attempt
     readUntil("Login id:");
-    write("");
+    write(" ");
     readUntil("Password:");
-    write("");
+    write(" ");
 
     // Second login attempt, must be successful
     readUntil("Login id:");

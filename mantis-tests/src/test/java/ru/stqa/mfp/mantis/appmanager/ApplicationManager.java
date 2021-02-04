@@ -1,5 +1,7 @@
 package ru.stqa.mfp.mantis.appmanager;
 
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -21,6 +23,11 @@ public class ApplicationManager {
   private FtpHelper ftp;
   private MailHelper mailHelper;
   private JamesHelper jamesHelper;
+  private SoapHelper soapHelper;
+  private NavigationHelper navigationHelper;
+  private UiSession uiSession;
+  private UserHelper user;
+  private DbHelper dbHelper;
 
   public ApplicationManager(String browser) {
     this.browser = browser;
@@ -90,4 +97,38 @@ public class ApplicationManager {
     return jamesHelper;
   }
 
+  public SoapHelper soap() {
+    if (soapHelper == null) {
+      soapHelper = new SoapHelper(this);
+    }
+    return soapHelper;
+  }
+
+  public NavigationHelper goTo() {
+    if (navigationHelper == null) {
+      navigationHelper = new NavigationHelper(this);
+    }
+    return navigationHelper;
+  }
+
+  public UiSession uiSession() {
+    if (uiSession == null) {
+      uiSession = new UiSession(this);
+    }
+    return uiSession;
+  }
+
+  public UserHelper user() {
+    if (user == null) {
+      user = new UserHelper(this);
+    }
+    return user;
+  }
+
+  public DbHelper db() {
+    if (dbHelper == null) {
+      dbHelper = new DbHelper(this);
+    }
+    return dbHelper;
+  }
 }

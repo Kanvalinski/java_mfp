@@ -1,6 +1,7 @@
 package ru.stqa.mfp.mantis.tests;
 
 import org.openqa.selenium.remote.BrowserType;
+import org.testng.SkipException;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import ru.stqa.mfp.mantis.appmanager.ApplicationManager;
@@ -25,4 +26,13 @@ public class TestBase {
     app.ftp().restore("config_inc.php.bak", "config_inc.php");
     app.stop();
   }
+
+  /*boolean isIssueOpen(int issueId)
+
+  public void skipIfNotFixed(int issueId) {
+    if (isIssueOpen(issueId)) {
+      throw new SkipException("Ignored because of issue " + issueId);
+    }
+  }
+  */
 }
