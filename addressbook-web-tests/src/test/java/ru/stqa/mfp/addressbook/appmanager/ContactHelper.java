@@ -3,12 +3,11 @@ package ru.stqa.mfp.addressbook.appmanager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import ru.stqa.mfp.addressbook.model.ContactData;
 import ru.stqa.mfp.addressbook.model.Contacts;
+import ru.stqa.mfp.addressbook.model.GroupData;
 
 import java.util.List;
 
@@ -45,7 +44,7 @@ public class ContactHelper extends HelperBase {
 
     if (creation) {
       if (contactData.getGroups().size() > 0) {
-        Assert.assertTrue(contactData.getGroups().size() ==1);
+        Assert.assertTrue(contactData.getGroups().size() == 1);
         new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData
                 .getGroups().iterator().next().getName());
       }
@@ -118,6 +117,37 @@ public class ContactHelper extends HelperBase {
     returnToHomePage();
   }
 
+  public void addToGroup(ContactData contact, GroupData group) {
+    contactCache = null;
+    selectContactById(contact.getId());
+    selectGroupInList(group.getId());
+    initAddToGroup();
+    //waitForMessage();
+  }
+
+  public void removeFromGroup(ContactData contact, GroupData group) {
+    contactCache = null;
+    selectContactById(contact.getId());
+    initDeleteFromGroup();
+    waitForMessage();
+  }
+
+  public void initAddToGroup() {
+    wd.findElement(By.name("add")).click();
+  }
+
+  public void initDeleteFromGroup() {
+    wd.findElement(By.name("remove")).click();
+  }
+
+  public void selectGroupInList(int groupId) {
+    new Select(wd.findElement(By.name("to_group"))).selectByValue(String.valueOf(groupId));
+  }
+
+  public void groupPage(int groupId) {
+    new Select(wd.findElement(By.name("group"))).selectByValue(String.valueOf(groupId));
+  }
+
   public boolean isThereAContact() {
     return isElementPresent(By.xpath("//input[@name='selected[]']"));
   }
@@ -160,7 +190,7 @@ public class ContactHelper extends HelperBase {
     String address = wd.findElement(By.name("address")).getAttribute("value");
     String email = wd.findElement(By.name("email")).getAttribute("value");
     String email2 = wd.findElement(By.name("email2")).getAttribute("value");
-    String email3= wd.findElement(By.name("email3")).getAttribute("value");
+    String email3 = wd.findElement(By.name("email3")).getAttribute("value");
     wd.navigate().back();
     return new ContactData().withId(contact.getId()).withFirstname(firstname).withLastname(lastname).
             withHomePhone(home).withMobilePhone(mobile).withWorkPhone(work).withAddress(address)

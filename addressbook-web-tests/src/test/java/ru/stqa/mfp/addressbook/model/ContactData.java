@@ -90,11 +90,10 @@ public class ContactData {
   @Transient
   private String byear;
 
-  /*
   @Expose
   @Transient
   private String group;
-   */
+
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(name = "address_in_groups",
           joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "group_id"))
@@ -177,10 +176,9 @@ public class ContactData {
     return byear;
   }
 
-  /* public String getGroup() {
+  public String getGroup() {
     return group;
   }
-  */
 
   public String getAllPhones() {
     return allPhones;
@@ -287,11 +285,11 @@ public class ContactData {
     return this;
   }
 
-  /* public ContactData withGroup(String group) {
+   public ContactData withGroup(String group) {
     this.group = group;
     return this;
   }
-   */
+
 
   public ContactData withPhoto(File photo) {
     this.photo = photo.getPath();
@@ -344,7 +342,7 @@ public class ContactData {
             '}';
   }
 
-  public ContactData inGroup(GroupData next) {
+  public ContactData inGroup(GroupData group) {
     groups.add(group);
     return this;
   }
